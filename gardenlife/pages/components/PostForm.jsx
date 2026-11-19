@@ -159,6 +159,7 @@ return (
                     <option value="">Select Category</option>
                     <option value="Indoor plants">Indoor plants</option>
                     <option value="Outdoor plants">Outdoor plants</option>
+                     <option value="Bamboo plants">Bamboo plants</option>
                     <option value="Fruits and vegetable seeds">
                         Fruits and vegetable seeds
                     </option>
