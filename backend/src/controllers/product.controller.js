@@ -26,6 +26,34 @@ const getdata=async(req,res)=>{
         return res.status(500).send({message:"error in retrieve product"})
     }
 }
+const getProductById = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        console.log("Searching ID:", id);
+
+        const product = await GardenModel.findById(id);
+
+        console.log("Found product:", product);
+
+        if (!product) {
+            return res.status(404).json({
+                message: "This product does not exist"
+            });
+        }
+
+        res.status(200).json({
+            data: product
+        });
+
+    } catch (error) {
+        console.log("Error:", error.message);
+
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
 const updatedata=async(req,res)=>{
     try{
         const id=req.params.id
@@ -55,5 +83,6 @@ module.exports={
     postdata,
     getdata,
     updatedata,
-   deletedata 
+   deletedata,
+   getProductById 
 }

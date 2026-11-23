@@ -1,19 +1,37 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../../common/Navbar';
 import Footer from '../../common/Footer';
-
+import { useNavigate } from 'react-router-dom';
 import indoor from '../../assets/indoor-plant.jpg';
 import Outdoor from '../../assets/outdoor-plants.webp';
 import Bamboo from '../../assets/bamboo-plants.webp';
 
 const Garden = () => {
 
-    const [data, setdata] = useState([]);
+    const [data, setdata] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const API = import.meta.env.VITE_BACKEND_URL;
-
+    const navigate = useNavigate();
+const categories = [
+    {
+        name: "Indoor Plants",
+        image: indoor,
+        path: "indoor_plants"
+    },
+    {
+        name: "Outdoor Plants",
+        image: Outdoor,
+        path: "outdoor_plants"
+    },
+    {
+        name: "Lucky Bamboo Plants",
+        image: Bamboo,
+        path: "Bamboo_plants"
+    }
+];
     // GET PRODUCTS
     const getdata = async () => {
         try {
@@ -49,7 +67,38 @@ const Garden = () => {
     useEffect(() => {
         getdata();
     }, []);
+const AddtoCart = async (product) => {
+    try {
+        const response = await fetch(`${API}/addcart`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                product_image: product.product_image,
+                product_name: product.product_name,
+                Description: product.Description,
+                product_price: product.product_price,
+                original_price: product.original_price,
+                Quantity: 1,
+                Category: product.Category,
+                Status: "Active"
+            })
+        });
 
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message);
+        }
+
+        alert("Product added to cart successfully!");
+
+    } catch (err) {
+        console.error("Add to cart error:", err);
+        alert("Failed to add product");
+    }
+};
     return (
         <div>
             <Navbar />
@@ -68,38 +117,24 @@ const Garden = () => {
 
                 <div className="flex flex-wrap items-center justify-center gap-8 text-xl">
 
-                    <div className="text-center">
-                        <img
-                            src={indoor}
-                            alt="Indoor plants"
-                            className="w-48 h-48 object-cover rounded-lg"
-                        />
-                        <p className="mt-2">Indoor Plants</p>
-                    </div>
+   {categories.map((category) => (
+    <div key={category.path} className="text-center">
+        <Link to={`/plants/${category.path}`}>
+            <img
+                src={category.image}
+                alt={category.name}
+                className="w-48 h-48 object-cover rounded-lg"
+            />
+            <p className="mt-2">{category.name}</p>
+        </Link>
+    </div>
+))}
 
-                    <div className="text-center">
-                        <img
-                            src={Outdoor}
-                            alt="Outdoor plants"
-                            className="w-48 h-48 object-cover rounded-lg"
-                        />
-                        <p className="mt-2">Outdoor Plants</p>
-                    </div>
-
-                    <div className="text-center">
-                        <img
-                            src={Bamboo}
-                            alt="Lucky bamboo plants"
-                            className="w-48 h-48 object-cover rounded-lg"
-                        />
-                        <p className="mt-2">Lucky Bamboo Plants</p>
-                    </div>
-
-                </div>
+</div>
             </div>
 
             {/* Seed Collection */}
-            <div className="p-5">
+            {/* <div className="p-5">
 
                 <p className="flex justify-center font-bold text-2xl mb-5">
                     Seed Collection
@@ -112,7 +147,7 @@ const Garden = () => {
                     <p>Herbs Seeds</p>
 
                 </div>
-            </div>
+            </div> */}
 
             {/* Product Display */}
             <div className="p-5">
@@ -129,7 +164,7 @@ const Garden = () => {
                     </p>
                 ) : (
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
 
                         {data.map((product) => {
 
@@ -142,13 +177,13 @@ const Garden = () => {
                             return (
                                 <div
                                     key={product._id}
-                                    className="border rounded-lg p-4 shadow-sm "
-                                >
+                                    className="border rounded-lg p-4 shadow-sm ">
 
                                     <img
                                         src={imageSrc}
                                         alt={product.product_name}
                                         className="w-[300px] h-[200px] object-contain rounded-md bg-white"
+                                         onClick={() => navigate(`/product/${product._id}`)}
                                         onError={(e) => {
                                             e.currentTarget.src = indoor;
                                         }}
@@ -158,13 +193,9 @@ const Garden = () => {
                                         <p className="text-sm text-gray-600">
                                             {product.Category}
                                         </p>
-                                        <h3 className="text-lg font-semibold">
+                                        <h3 className="text-lg font-semibold"  onClick={() => navigate(`/product/${product._id}`)}>
                                             {product.product_name}
                                         </h3>
-
-                                        <p className="text-gray-600">
-                                            {product.Description}
-                                        </p>
                                         <div className="flex justify-center gap-3">
                                             <p className="text-green-700 font-bold">
                                             ₹{product.product_price}
@@ -178,8 +209,8 @@ const Garden = () => {
                                             Quantity: {product.Quantity}
                                         </p>
                                         <div className='flex justify-center gap-3'>
-                                            <button className='bg-green-00 p-3 rounded-2xl text-white'>Shop now</button>
-                                            <button className='bg-orange-300 p-3 rounded-2xl text-white'> add to cart</button>
+                                            <button className='bg-green-300 p-3 rounded-2xl text-white'>Shop now</button>
+                                            <button className='bg-orange-300 p-3 rounded-2xl text-white'  onClick={() => AddtoCart(product)}> add to cart</button>
                                         </div>
                                     </div>
 

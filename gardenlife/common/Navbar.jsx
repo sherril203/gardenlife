@@ -18,8 +18,8 @@ const Navbar = () => {
         </div>
      
       <div className='flex justify-center items-center'>
-        <p><Link to="" className='p-3 text-xl'>Cart</Link></p>
-        <button className='bg-green-400 text-white p-1 rounded-xl text-xl'>Login</button>
+        <p><Link to="/cart" className='p-3 text-xl'>Cart</Link></p>
+        <button className='bg-green-400 text-white p-2 rounded-xl text-xl'>Login</button>
       </div>
     </div>
   )
