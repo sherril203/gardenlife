@@ -4,8 +4,36 @@ import Footer from '../../common/Footer'
 import indoor from '../../assets/indoor-plant.jpg'
 import Outdoor from '../../assets/outdoor-plants.webp'
 import Bamboo from '../../assets/bamboo-plants.webp'
+import Soils from '../../assets/soil.webp'
+import Fertilizer from '../../assets/fertilizers.jpg'
 import { Link } from 'react-router-dom';
 const Home = () => {
+    const categories = [
+        {
+            name: "Indoor Plants",
+            image: indoor,
+            path: "indoor_plants"
+        },
+        {
+            name: "Outdoor Plants",
+            image: Outdoor,
+            path: "outdoor_plants"
+        },
+        {
+            name: "Lucky Bamboo Plants",
+            image: Bamboo,
+            path: "Bamboo_plants"
+        },{
+            name:"Soils",
+            image:Soils,
+            path:"Soils"
+        },
+        {
+            name:"Fertilizers",
+            image:Fertilizer,
+            path:"Fertilizers"
+        }
+    ];
     return (
         <div>
             <Navbar />
@@ -31,61 +59,29 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className='p-3'>
-                <p className='flex justify-center font-bold text-2xl'>Type of plant</p>
-                <div className="flex flex-wrap items-center justify-center gap-8 text-xl">
-
-                    <div className="text-center p-3">
-                        <Link to="/indoor_plants">
+            <div className="p-5">
+            
+                            <p className="flex justify-center font-bold text-2xl mb-5">
+                                categories
+                            </p>
+            
+                            <div className="flex flex-wrap items-center justify-center gap-8 text-xl">
+            
+               {categories.map((category) => (
+                <div key={category.path} className="text-center">
+                    <Link to={`/category/${category.path}`}>
                         <img
-                            src={indoor}
-                            alt="Indoor plants"
+                            src={category.image}
+                            alt={category.name}
                             className="w-48 h-48 object-cover rounded-lg"
                         />
-                         <p className="mt-2">Indoor Plants</p>
-                        </Link>
-                   
-                        
-                    </div>
-
-                    <div className="text-center">
-                        <Link to="/outdoor_plants">
-                        <img
-                            src={Outdoor}
-                            alt="Outdoor plants"
-                            className="w-48 h-48 object-cover rounded-lg"
-                        />
-                        <p className="mt-2">Outdoor Plants</p>
-                        </Link>
-                    </div>
-
-                    <div className="text-center">
-                        <Link to="/bamboo_plants">
-                        <img
-                            src={Bamboo}
-                            alt="Lucky bamboo plants"
-                            className="w-48 h-48 object-cover rounded-lg"
-                        />
-                        <p className="mt-2">Lucky Bamboo Plants</p>
-                        </Link>
-                    </div>
-
+                        <p className="mt-2">{category.name}</p>
+                    </Link>
                 </div>
+            ))}
+            
             </div>
-            <div className='p-3'>
-                <p className='flex justify-center font-bold text-2xl'>seed collection</p>
-                <div className='flex items-center justify-center gap-3 text-xl'>
-                    <div>
-                        <p>Flower seeds</p>
-                    </div>
-                    <div>
-                        <p>Fruits and vegetables seeds</p>
-                    </div>
-                    <div>
-                        <p>Herbs seeds</p>
-                    </div>
-                </div>
-            </div>
+                        </div>
             <Footer />
         </div>
     )

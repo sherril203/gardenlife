@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import indoor from '../../assets/indoor-plant.jpg';
 import Outdoor from '../../assets/outdoor-plants.webp';
 import Bamboo from '../../assets/bamboo-plants.webp';
-
+import Soils from '../../assets/soil.webp'
+import Fertilizer from '../../assets/fertilizers.jpg'
 const Garden = () => {
 
     const [data, setdata] = useState(null);
@@ -30,6 +31,15 @@ const categories = [
         name: "Lucky Bamboo Plants",
         image: Bamboo,
         path: "Bamboo_plants"
+    },{
+        name:"Soils",
+        image:Soils,
+        path:"soils"
+    },
+    {
+        name:"Fertilizers",
+        image:Fertilizer,
+        path:"fertilizers"
     }
 ];
     // GET PRODUCTS
@@ -112,14 +122,14 @@ const AddtoCart = async (product) => {
             <div className="p-5">
 
                 <p className="flex justify-center font-bold text-2xl mb-5">
-                    Type of Plant
+                    categories
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-8 text-xl">
 
    {categories.map((category) => (
     <div key={category.path} className="text-center">
-        <Link to={`/plants/${category.path}`}>
+        <Link to={`/category/${category.path}`}>
             <img
                 src={category.image}
                 alt={category.name}
@@ -132,23 +142,6 @@ const AddtoCart = async (product) => {
 
 </div>
             </div>
-
-            {/* Seed Collection */}
-            {/* <div className="p-5">
-
-                <p className="flex justify-center font-bold text-2xl mb-5">
-                    Seed Collection
-                </p>
-
-                <div className="flex flex-wrap items-center justify-center gap-8 text-lg">
-
-                    <p>Flower Seeds</p>
-                    <p>Fruits and Vegetable Seeds</p>
-                    <p>Herbs Seeds</p>
-
-                </div>
-            </div> */}
-
             {/* Product Display */}
             <div className="p-5">
 
@@ -209,8 +202,8 @@ const AddtoCart = async (product) => {
                                             Quantity: {product.Quantity}
                                         </p>
                                         <div className='flex justify-center gap-3'>
-                                            <button className='bg-green-300 p-3 rounded-2xl text-white'>Shop now</button>
-                                            <button className='bg-orange-300 p-3 rounded-2xl text-white'  onClick={() => AddtoCart(product)}> add to cart</button>
+                                            <button className='bg-green-600 p-3 rounded-2xl text-white'>Shop now</button>
+                                            <button className='bg-orange-500 p-3 rounded-2xl text-white'  onClick={() => AddtoCart(product)}> add to cart</button>
                                         </div>
                                     </div>
 

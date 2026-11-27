@@ -131,7 +131,6 @@ const Collection = () => {
                                                 ₹{product.original_price}
                                             </p>
                                         </div>
-
                                         <p className="text-sm text-gray-600">
                                             Quantity: {product.Quantity}
                                         </p>
