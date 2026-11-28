@@ -19,7 +19,8 @@ const Navbar = () => {
      
       <div className='flex justify-center items-center'>
         <p><Link to="/cart" className='p-3 text-xl'>Cart</Link></p>
-        <button className='bg-green-400 text-white p-2 rounded-xl text-xl'>Login</button>
+        <button className='bg-green-400 text-white p-2 rounded-xl text-xl'><Link
+        to="/login" className='text-xl'>Login</Link></button>
       </div>
     </div>
   )

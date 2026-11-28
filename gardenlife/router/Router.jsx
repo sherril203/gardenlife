@@ -11,6 +11,8 @@ import Cart from '../pages/components/Cart';
 import Admin from '../pages/admin/Admin';
 import Products from '../pages/admin/Products';
 import Profile from '../pages/admin/Profile';
+import Login from '../pages/components/Login';
+import Signup from '../pages/components/Signup';
 const Router = () => {
   return (
     <Routes>
@@ -19,6 +21,8 @@ const Router = () => {
         <Route path="/services" element={<Service/>}/>
          <Route path="/contact" element={<Contact/>}/>
         <Route path="/post" element={<PostForm/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/signup" element={<Signup/>}/>
            <Route path="/category/:plantName" element={<Collection />} />
            <Route path="/product/:id" element={<Product />} />
            <Route path="/cart" element={<Cart/>}/>
